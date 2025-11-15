@@ -1,9 +1,38 @@
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../context/UserContext';
+
 const Profile = () => {
-  const userEmail = "usuario@example.com";
+  const { email, getProfile, logout } = useContext(UserContext);
+  const [profileEmail, setProfileEmail] = useState(email);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!email) {
+        const result = await getProfile();
+        if (result.success) {
+          setProfileEmail(result.email);
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchProfile();
+  }, [email, getProfile]);
 
   const handleLogout = () => {
-    alert('Cerrando sesión...');
+    logout();
   };
+
+  if (loading) {
+    return (
+      <div className="container mt-5 text-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">
@@ -27,7 +56,7 @@ const Profile = () => {
                   </svg>
                 </div>
                 <p className="lead">Email:</p>
-                <p className="fs-5 fw-bold">{userEmail}</p>
+                <p className="fs-5 fw-bold">{profileEmail || email}</p>
               </div>
               <button 
                 className="btn btn-danger btn-lg w-100" 

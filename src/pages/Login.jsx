@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const Login = () => {
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -41,18 +46,30 @@ const Login = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const newErrors = validateForm();
     
     if (Object.keys(newErrors).length === 0) {
-      setSuccessMessage('¡Inicio de sesión exitoso! 🍕');
-      setErrors({});
-      setFormData({
-        email: '',
-        password: ''
-      });
+      // Llamar al método login del UserContext
+      const result = await login(formData.email, formData.password);
+      
+      if (result.success) {
+        setSuccessMessage('¡Inicio de sesión exitoso! 🍕');
+        setErrors({});
+        setFormData({
+          email: '',
+          password: ''
+        });
+        // Redirigir al home después de 1 segundo
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+      } else {
+        setErrors({ general: result.error });
+        setSuccessMessage('');
+      }
     } else {
       setErrors(newErrors);
       setSuccessMessage('');
@@ -70,6 +87,12 @@ const Login = () => {
               {successMessage && (
                 <div className="alert alert-success" role="alert">
                   {successMessage}
+                </div>
+              )}
+
+              {errors.general && (
+                <div className="alert alert-danger" role="alert">
+                  {errors.general}
                 </div>
               )}
 
