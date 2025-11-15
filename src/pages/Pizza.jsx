@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 import { formatPrice } from '../utils/formatPrice';
 
 const Pizza = () => {
   const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
   const [pizza, setPizza] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,6 +33,17 @@ const Pizza = () => {
 
     fetchPizza();
   }, [id]);
+
+  const handleAddToCart = () => {
+    if (pizza) {
+      addToCart({
+        id: pizza.id,
+        name: pizza.name,
+        price: pizza.price,
+        img: pizza.img
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -86,7 +99,12 @@ const Pizza = () => {
           <hr />
           <div className="d-flex justify-content-between align-items-center">
             <h3 className="mb-0">Precio: ${formatPrice(pizza.price)}</h3>
-            <button className="btn btn-dark btn-lg">Añadir al carrito 🛒</button>
+            <button 
+              className="btn btn-dark btn-lg"
+              onClick={handleAddToCart}
+            >
+              Añadir al carrito 🛒
+            </button>
           </div>
         </div>
       </div>
@@ -94,4 +112,4 @@ const Pizza = () => {
   );
 };
 
-export default Pizza;
+export default Pizza
