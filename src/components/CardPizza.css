@@ -1,0 +1,92 @@
+.pizza-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pizza-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pizza-card .card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.pizza-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.5rem;
+}
+
+.pizza-card .card-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.ingredients-section {
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.ingredients-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #ff8c00;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.price-section {
+  margin: 1rem 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.price {
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.button-group button,
+.button-group a {
+  flex: 1;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.button-group .btn-outline-dark:hover {
+  background-color: #f8f9fa;
+  border-color: #333;
+}
+
+.button-group .btn-dark:hover {
+  background-color: #222;
+  border-color: #222;
+}

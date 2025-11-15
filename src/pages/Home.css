@@ -1,0 +1,19 @@
+.home {
+  min-height: calc(100vh - 200px);
+}
+
+.home .row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.home .col-md-4 {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .home .col-md-4 {
+    flex: 0 0 100%;
+  }
+}
